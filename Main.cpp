@@ -7,6 +7,11 @@
 
 int main(int argc, char* argv[])
 {
+#ifdef Q_OS_ANDROID
+  qputenv("QT_ANDROID_NO_EXIT_CALL", "1");
+  qputenv("QT_ANDROID_DISABLE_ACCESSIBILITY", "1");
+#endif
+
   QApplication a(argc, argv);
   MainWindow w;
   w.show();
