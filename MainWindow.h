@@ -3,7 +3,8 @@
 
 #pragma once
 
-#include <QWidget>
+#include <QCamera>
+#include <QVideoWidget>
 
 class MainWindow : public QWidget
 {
@@ -11,4 +12,10 @@ class MainWindow : public QWidget
 
 public:
   explicit MainWindow(QWidget* parent = nullptr);
+
+private:
+  void connectCamera();
+
+  QVideoWidget* m_video_widget;
+  QCamera* m_camera;
 };

@@ -12,6 +12,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(Qt6 REQUIRED COMPONENTS
   Core
   Gui
+  Multimedia
+  MultimediaWidgets
   Widgets
 )
 message(STATUS "Using Qt ${Qt6_VERSION} from ${Qt6_DIR}")
@@ -26,5 +28,7 @@ qt_add_executable(${APP_NAME}
 target_link_libraries(${APP_NAME} PUBLIC
   Qt::Core
   Qt::Gui
+  Qt::Multimedia
+  Qt::MultimediaWidgets
   Qt::Widgets
 )
