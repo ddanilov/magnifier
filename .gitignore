@@ -1,0 +1,7 @@
+.idea
+.qtcreator
+
+build*/
+cmake-build-*/
+
+CMakeLists.txt.*
