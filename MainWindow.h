@@ -22,6 +22,7 @@ signals:
 
 private slots:
   void setFontPixelSize(int pixel_size);
+  void switchTorch();
 
 private:
   void connectCamera();

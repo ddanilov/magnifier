@@ -49,6 +49,18 @@ void MainWindow::setFontPixelSize(int pixel_size)
   }
 }
 
+void MainWindow::switchTorch()
+{
+  if (m_camera->torchMode() != QCamera::TorchOff)
+  {
+    m_camera->setTorchMode(QCamera::TorchOff);
+  }
+  else
+  {
+    m_camera->setTorchMode(QCamera::TorchOn);
+  }
+}
+
 void MainWindow::connectCamera()
 {
 #if QT_CONFIG(permissions)
@@ -83,5 +95,6 @@ void MainWindow::addButtons()
   }
 
   auto* torch_button = new QPushButton("T");
+  connect(torch_button, &QPushButton::pressed, this, &MainWindow::switchTorch);
   m_control_layout->addWidget(torch_button, 1);
 }
