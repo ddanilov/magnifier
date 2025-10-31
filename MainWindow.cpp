@@ -24,6 +24,29 @@ MainWindow::MainWindow(QWidget* parent) :
 
   connectCamera();
   addButtons();
+
+  connect(this, &MainWindow::fontPixelSizeChanged, this, &MainWindow::setFontPixelSize);
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+  auto pixel_size = static_cast<int>(0.4 * width() / (3 + 1));
+  emit fontPixelSizeChanged(pixel_size);
+  QWidget::resizeEvent(event);
+}
+
+void MainWindow::setFontPixelSize(int pixel_size)
+{
+  auto buttons = findChildren<QPushButton*>();
+  if (!buttons.empty())
+  {
+    QFont font(buttons.front()->font());
+    font.setPixelSize(pixel_size);
+    for (auto* button : std::as_const(buttons))
+    {
+      button->setFont(font);
+    }
+  }
 }
 
 void MainWindow::connectCamera()

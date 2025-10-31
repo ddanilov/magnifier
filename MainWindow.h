@@ -14,6 +14,15 @@ class MainWindow : public QWidget
 public:
   explicit MainWindow(QWidget* parent = nullptr);
 
+protected:
+  void resizeEvent(QResizeEvent* event) override;
+
+signals:
+  void fontPixelSizeChanged(int pixel_size);
+
+private slots:
+  void setFontPixelSize(int pixel_size);
+
 private:
   void connectCamera();
   void addButtons();
