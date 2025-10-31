@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <QBoxLayout>
 #include <QCamera>
 #include <QVideoWidget>
 
@@ -15,7 +16,10 @@ public:
 
 private:
   void connectCamera();
+  void addButtons();
 
   QVideoWidget* m_video_widget;
   QCamera* m_camera;
+
+  QBoxLayout* m_control_layout;
 };
