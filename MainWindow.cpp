@@ -90,7 +90,7 @@ void MainWindow::addButtons()
   constexpr int num_buttons = 3;
   for (int i = 0; i < num_buttons; ++i)
   {
-    const auto factor = static_cast<double>(i + 2);
+    const auto factor = static_cast<float>(i + 2);
     auto* zoom_button = new QPushButton;
     zoom_button->setText(QString("%1X").arg(factor, 0, 'f', 0));
     connect(zoom_button, &QPushButton::pressed, this, [this, factor]() { setZoom(factor); });
