@@ -28,6 +28,8 @@ private:
   void connectCamera();
   void addButtons();
 
+  void setZoom(float factor);
+
   QVideoWidget* m_video_widget;
   QCamera* m_camera;
 

@@ -90,11 +90,19 @@ void MainWindow::addButtons()
   constexpr int num_buttons = 3;
   for (int i = 0; i < num_buttons; ++i)
   {
-    auto* zoom_button = new QPushButton("X");
+    const auto factor = static_cast<double>(i + 2);
+    auto* zoom_button = new QPushButton;
+    zoom_button->setText(QString("%1X").arg(factor, 0, 'f', 0));
+    connect(zoom_button, &QPushButton::pressed, this, [this, factor]() { setZoom(factor); });
     m_control_layout->addWidget(zoom_button, 1);
   }
 
   auto* torch_button = new QPushButton("T");
   connect(torch_button, &QPushButton::pressed, this, &MainWindow::switchTorch);
   m_control_layout->addWidget(torch_button, 1);
+}
+
+void MainWindow::setZoom(const float factor)
+{
+  m_camera->setZoomFactor(factor);
 }
