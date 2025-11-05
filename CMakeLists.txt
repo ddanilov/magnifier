@@ -3,6 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+set(ORG_NAME "org.codeberg.danilov")
 set(APP_NAME "magnifier")
 
 project(${APP_NAME} LANGUAGES CXX)
@@ -24,7 +25,11 @@ qt_add_executable(${APP_NAME}
   MANUAL_FINALIZATION
   Main.cpp
   MainWindow.h MainWindow.cpp
+  MetaData.h
 )
+
+configure_file(MetaData.h.in ${CMAKE_CURRENT_BINARY_DIR}/MetaData.h)
+target_include_directories(${APP_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(${APP_NAME} PUBLIC
   Qt::Core
@@ -34,6 +39,7 @@ target_link_libraries(${APP_NAME} PUBLIC
   Qt::Widgets
 )
 
+set_property(TARGET ${APP_NAME} PROPERTY QT_ANDROID_PACKAGE_NAME ${ORG_NAME}.${APP_NAME})
 set_property(TARGET ${APP_NAME} PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android)
 
 qt_finalize_executable(${APP_NAME})
