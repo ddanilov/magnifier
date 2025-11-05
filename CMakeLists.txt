@@ -21,6 +21,7 @@ message(STATUS "Using Qt ${Qt6_VERSION} from ${Qt6_DIR}")
 qt_standard_project_setup()
 
 qt_add_executable(${APP_NAME}
+  MANUAL_FINALIZATION
   Main.cpp
   MainWindow.h MainWindow.cpp
 )
@@ -32,3 +33,7 @@ target_link_libraries(${APP_NAME} PUBLIC
   Qt::MultimediaWidgets
   Qt::Widgets
 )
+
+set_property(TARGET ${APP_NAME} PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android)
+
+qt_finalize_executable(${APP_NAME})
