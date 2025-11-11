@@ -14,6 +14,7 @@ There is also button to turn camera torch on or off.
 
 Details may vary depending on your Qt version, host and target architecture etc.
 Below an example how to build the app with Qt 6.9.3 for `arm64_v8a` target on `x86_64` Debian/Ubuntu system.
+See https://doc.qt.io/qt-6.9/android.html and https://wiki.qt.io/Qt_6.9_Tools_and_Versions for more details on Android configuration.
 
 ### Prerequisites
 
