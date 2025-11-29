@@ -1,0 +1,3 @@
+The app provides magnification functionality, making it easier to read small text or view detailed images.
+It has three predefined zoom levels. You can select the desired zoom level using one of the buttons.
+There is also button to turn camera torch on or off.
