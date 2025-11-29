@@ -7,6 +7,7 @@ Open-source magnifier app based on Qt framework.
 The app provides magnification functionality, making it easier to read small text or view detailed images. 
 It has three predefined zoom levels. You can select the desired zoom level using one of the buttons, see the screenshot below.
 There is also button to turn camera torch on or off.
+Pressing Back button on the Navigation bar will show application and Qt versions. 
 
 ![](screenshots/overview.png)
 
