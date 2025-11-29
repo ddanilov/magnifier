@@ -5,3 +5,4 @@
 
 #cmakedefine ORG_NAME "@ORG_NAME@"
 #cmakedefine APP_NAME "@APP_NAME@"
+#cmakedefine LAST_TAG "@LAST_TAG@"

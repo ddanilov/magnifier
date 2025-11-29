@@ -3,13 +3,18 @@
 
 #include "MainWindow.h"
 
+#include "MetaData.h"
+
 #include <QApplication>
+#include <QKeyEvent>
+#include <QLabel>
 #include <QMediaCaptureSession>
 #include <QPermissions>
 #include <QPushButton>
 
 MainWindow::MainWindow(QWidget* parent) :
     QWidget(parent),
+    m_info_widget(new QTextEdit),
     m_video_widget(new QVideoWidget),
     m_camera(new QCamera(QCameraDevice::BackFace)),
     m_control_layout(new QHBoxLayout)
@@ -17,15 +22,30 @@ MainWindow::MainWindow(QWidget* parent) :
   auto* layout = new QVBoxLayout;
   layout->setContentsMargins(0, 0, 0, 0);
 
+  layout->addWidget(m_info_widget, 1);
   layout->addWidget(m_video_widget, 1);
   layout->addLayout(m_control_layout);
+
+  m_info_widget->hide();
 
   setLayout(layout);
 
   connectCamera();
   addButtons();
+  setInfo();
 
   connect(this, &MainWindow::fontPixelSizeChanged, this, &MainWindow::setFontPixelSize);
+  connect(this, &MainWindow::switchView, this, &MainWindow::switchBetweenVideoAndInfo);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+  if (event->key() == Qt::Key_Back || event->key() == Qt::Key_Backspace)
+  {
+    emit switchView();
+    event->ignore();
+  }
+  event->accept();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -37,14 +57,14 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::setFontPixelSize(int pixel_size)
 {
-  auto buttons = findChildren<QPushButton*>();
-  if (!buttons.empty())
+  auto widgets = findChildren<QWidget*>();
+  if (!widgets.empty())
   {
-    QFont font(buttons.front()->font());
+    QFont font(widgets.front()->font());
     font.setPixelSize(pixel_size);
-    for (auto* button : std::as_const(buttons))
+    for (auto* widget : std::as_const(widgets))
     {
-      button->setFont(font);
+      widget->setFont(font);
     }
   }
 }
@@ -58,6 +78,20 @@ void MainWindow::switchTorch()
   else
   {
     m_camera->setTorchMode(QCamera::TorchOn);
+  }
+}
+
+void MainWindow::switchBetweenVideoAndInfo()
+{
+  if (m_video_widget->isHidden())
+  {
+    m_info_widget->hide();
+    m_video_widget->show();
+  }
+  else
+  {
+    m_video_widget->hide();
+    m_info_widget->show();
   }
 }
 
@@ -100,6 +134,19 @@ void MainWindow::addButtons()
   auto* torch_button = new QPushButton("T");
   connect(torch_button, &QPushButton::pressed, this, &MainWindow::switchTorch);
   m_control_layout->addWidget(torch_button, 1);
+}
+
+void MainWindow::setInfo()
+{
+  QString info;
+  info.append("<small>");
+  info.append(QString("App Version: %1").arg(LAST_TAG));
+  info.append("<br>");
+  info.append(QString("Qt Version: %1").arg(qVersion()));
+  info.append("</small>");
+
+  m_info_widget->setText(info);
+  m_info_widget->setReadOnly(true);
 }
 
 void MainWindow::setZoom(const float factor)
